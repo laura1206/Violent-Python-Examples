@@ -6,8 +6,7 @@ import optparse
 from anonBrowser import *
 
 def get_tweets(handle):
-    query = urllib.quote_plus('from:' + handle+\
-      ' since:2009-01-01 include:retweets')
+    query = urllib.quote_plus(f'from:{handle} since:2009-01-01 include:retweets')
     tweets = []
     browser = anonBrowser()
     browser.anonymize()
@@ -17,10 +16,12 @@ def get_tweets(handle):
 
     json_objects = json.load(response)
     for result in json_objects['results']:
-        new_result = {}
-        new_result['from_user'] = result['from_user_name']
-        new_result['geo'] = result['geo']
-        new_result['tweet'] = result['text']
+        new_result = {
+            'from_user': result['from_user_name'],
+            'geo': result['geo'],
+            'tweet': result['text'],
+        }
+
         tweets.append(new_result)
 
     return tweets
@@ -28,9 +29,9 @@ def get_tweets(handle):
 
 def load_cities(cityFile):
     cities = []
-    for line in open(cityFile).readlines():
-	city=line.strip('\n').strip('\r').lower()
-	cities.append(city)
+    for line in open(cityFile):
+        city=line.strip('\n').strip('\r').lower()
+        cities.append(city)
     return cities
 
 def twitter_locate(tweets,cities):

@@ -67,16 +67,15 @@ def printGoogle(placesDB):
       where visit_count > 0 and moz_places.id==\
       moz_historyvisits.place_id;")
 
-    print '\n[*] -- Found Google --'
+    conn = sqlite3.connect(placesDB)
     for row in c:
         url = str(row[0])
         date = str(row[1])
         if 'google' in url.lower():
-            r = re.findall(r'q=.*\&', url)
-            if r:
+            if r := re.findall(r'q=.*\&', url):
                 search=r[0].split('&')[0]
                 search=search.replace('q=', '').replace('+', ' ')
-                print '[+] '+date+' - Searched For: ' + search
+                search=r[0].split('&')[0]
 
 
 def main():

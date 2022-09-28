@@ -12,8 +12,7 @@ def handlePkt(pkt):
             if rdata not in dnsRecords[rrname]:
                 dnsRecords[rrname].append(rdata)
         else:
-            dnsRecords[rrname] = []
-            dnsRecords[rrname].append(rdata)
+            dnsRecords[rrname] = [rdata]
 
 
 def main():

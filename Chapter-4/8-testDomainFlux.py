@@ -20,7 +20,6 @@ def main():
     for pkt in pkts:
         if dnsQRTest(pkt):
             unAnsReqs = unAnsReqs + 1
-    print '[!] '+str(unAnsReqs)+' Total Unanswered Name Requests'
 
 
 if __name__ == '__main__':

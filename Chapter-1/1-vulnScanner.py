@@ -10,8 +10,7 @@ def retBanner(ip, port):
         socket.setdefaulttimeout(2)
         s = socket.socket()
         s.connect((ip, port))
-        banner = s.recv(1024)
-        return banner
+        return s.recv(1024)
     except:
         return
 
