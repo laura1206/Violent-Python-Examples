@@ -11,10 +11,8 @@ from _winreg import *
 
 
 def val2addr(val):
-    addr = ''
-    for ch in val:
-        addr += '%02x ' % ord(ch)
-    addr = addr.strip(' ').replace(' ', ':')[0:17]
+    addr = ''.join('%02x ' % ord(ch) for ch in val)
+    addr = addr.strip(' ').replace(' ', ':')[:17]
     return addr
 
 
@@ -24,20 +22,15 @@ def wiglePrint(username, password, netid):
     reqData = urllib.urlencode({'credential_0': username,
                                'credential_1': password})
     browser.open('https://wigle.net/gps/gps/main/login', reqData)
-    params = {}
-    params['netid'] = netid
+    params = {'netid': netid}
     reqParams = urllib.urlencode(params)
     respURL = 'http://wigle.net/gps/gps/main/confirmquery/'
     resp = browser.open(respURL, reqParams).read()
     mapLat = 'N/A'
-    mapLon = 'N/A'
-    rLat = re.findall(r'maplat=.*\&', resp)
-    if rLat:
+    if rLat := re.findall(r'maplat=.*\&', resp):
         mapLat = rLat[0].split('&')[0].split('=')[1]
-    rLon = re.findall(r'maplon=.*\&', resp)
-    if rLon:
-        mapLon = rLon[0].split
-    print '[-] Lat: ' + mapLat + ', Lon: ' + mapLon
+    mapLon = rLon[0].split if (rLon := re.findall(r'maplon=.*\&', resp)) else 'N/A'
+    browser = mechanize.Browser()
 
 
 def printNets(username, password):

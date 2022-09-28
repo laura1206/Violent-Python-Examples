@@ -37,7 +37,7 @@ def main():
     host = 'localhost'
     user = 'root'
     password = 'toor'
-    
+
     child = connect(user, host, password)
     send_command(child, 'cat /etc/shadow | grep root')
 

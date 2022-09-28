@@ -20,10 +20,9 @@ def sid2user(sid):
 
 def returnDir():
     dirs=['C:\\Recycler\\','C:\\Recycled\\','C:\\$Recycle.Bin\\']
-    for recycleDir in dirs:
-        if os.path.isdir(recycleDir):
-            return recycleDir
-    return None
+    return next(
+        (recycleDir for recycleDir in dirs if os.path.isdir(recycleDir)), None
+    )
 
 
 def findRecycled(recycleDir):

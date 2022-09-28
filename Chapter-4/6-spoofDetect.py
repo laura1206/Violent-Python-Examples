@@ -45,15 +45,8 @@ def main():
       help='specify threshold count ')
 
     (options, args) = parser.parse_args()
-    if options.iface == None:
-        conf.iface = 'eth0'
-    else:
-        conf.iface = options.iface
-    if options.thresh != None:
-        THRESH = options.thresh
-    else:
-        THRESH = 5
-
+    conf.iface = 'eth0' if options.iface is None else options.iface
+    THRESH = options.thresh if options.thresh != None else 5
     sniff(prn=testTTL, store=0)
 
 

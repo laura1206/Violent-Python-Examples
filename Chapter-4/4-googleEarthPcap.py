@@ -12,15 +12,15 @@ def retKML(ip):
     try:
         longitude = rec['longitude']
         latitude = rec['latitude']
-        kml = (
-               '<Placemark>\n'
-               '<name>%s</name>\n'
-               '<Point>\n'
-               '<coordinates>%6f,%6f</coordinates>\n'
-               '</Point>\n'
-               '</Placemark>\n'
-               ) %(ip,longitude, latitude)
-        return kml
+        return (
+            '<Placemark>\n'
+            '<name>%s</name>\n'
+            '<Point>\n'
+            '<coordinates>%6f,%6f</coordinates>\n'
+            '</Point>\n'
+            '</Placemark>\n'
+        ) % (ip, longitude, latitude)
+
     except:
         return ''
 

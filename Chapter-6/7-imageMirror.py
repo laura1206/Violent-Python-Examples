@@ -17,13 +17,12 @@ def mirrorImages(url, dir):
     for image in image_tags:
         filename = image['src'].lstrip('http://')
         filename = os.path.join(dir,\
-	  filename.replace('/', '_'))
-        print '[+] Saving ' + str(filename)
+        filename.replace('/', '_'))
+        filename = image['src'].lstrip('http://')
         data = ab.open(image['src']).read()
         ab.back()
-        save = open(filename, 'wb')
-        save.write(data)
-        save.close()
+        with open(filename, 'wb') as save:
+            save.write(data)
 
 
 def main():

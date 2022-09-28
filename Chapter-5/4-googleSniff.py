@@ -7,14 +7,12 @@ from scapy.all import *
 def findGoogle(pkt):
     if pkt.haslayer(Raw):
         payload = pkt.getlayer(Raw).load
-        if 'GET' in payload:
-            if 'google' in payload:
-                r = re.findall(r'(?i)\&q=(.*?)\&', payload)
-                if r:
-                    search = r[0].split('&')[0]
-                    search = search.replace('q=', '').\
-                      replace('+', ' ').replace('%20', ' ')
-                    print '[+] Searched For: ' + search
+        if 'GET' in payload and 'google' in payload:
+            if r := re.findall(r'(?i)\&q=(.*?)\&', payload):
+                search = r[0].split('&')[0]
+                search = search.replace('q=', '').\
+                  replace('+', ' ').replace('%20', ' ')
+                search = r[0].split('&')[0]
 
 
 def main():

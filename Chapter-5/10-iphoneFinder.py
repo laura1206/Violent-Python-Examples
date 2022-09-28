@@ -6,9 +6,9 @@ from bluetooth import *
 
 
 def retBtAddr(addr):
-    btAddr=str(hex(int(addr.replace(':', ''), 16) + 1))[2:]
-    btAddr=btAddr[0:2]+":"+btAddr[2:4]+":"+btAddr[4:6]+":"+\
-    btAddr[6:8]+":"+btAddr[8:10]+":"+btAddr[10:12]
+    btAddr = hex(int(addr.replace(':', ''), 16) + 1)[2:]
+    btAddr = f"{btAddr[:2]}:{btAddr[2:4]}:{btAddr[4:6]}:{btAddr[6:8]}:{btAddr[8:10]}:{btAddr[10:12]}"
+
     return btAddr
 
 def checkBluetooth(btAddr):

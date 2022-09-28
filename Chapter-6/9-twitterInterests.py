@@ -10,8 +10,7 @@ from anonBrowser import *
 
 
 def get_tweets(handle):
-    query = urllib.quote_plus('from:' + handle+\
-      ' since:2009-01-01 include:retweets')
+    query = urllib.quote_plus(f'from:{handle} since:2009-01-01 include:retweets')
     tweets = []
     browser = anonBrowser()
     browser.anonymize()
@@ -21,20 +20,18 @@ def get_tweets(handle):
 
     json_objects = json.load(response)
     for result in json_objects['results']:
-        new_result = {}
-        new_result['from_user'] = result['from_user_name']
-        new_result['geo'] = result['geo']
-        new_result['tweet'] = result['text']
+        new_result = {
+            'from_user': result['from_user_name'],
+            'geo': result['geo'],
+            'tweet': result['text'],
+        }
+
         tweets.append(new_result)
     return tweets
 
 
 def find_interests(tweets):
-    interests = {}
-    interests['links'] = []
-    interests['users'] = []
-    interests['hashtags'] = []
-
+    interests = {'links': [], 'users': [], 'hashtags': []}
     for tweet in tweets:
         text = tweet['tweet']
         links = re.compile('(http.*?)\Z|(http.*?) ')\

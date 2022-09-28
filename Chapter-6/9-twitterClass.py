@@ -14,30 +14,29 @@ class reconPerson:
         self.tweets = self.get_tweets()
 
     def get_tweets(self):
-        query = urllib.quote_plus('from:' + self.handle+\
-          ' since:2009-01-01 include:retweets'
-                                  )
+        query = urllib.quote_plus(
+            f'from:{self.handle} since:2009-01-01 include:retweets'
+        )
+
         tweets = []
         browser = anonBrowser()
         browser.anonymize()
         response = browser.open('http://search.twitter.com/'+\
-          'search.json?q=' + query)
+              'search.json?q=' + query)
 
         json_objects = json.load(response)
         for result in json_objects['results']:
-            new_result = {}
-            new_result['from_user'] = result['from_user_name']
-            new_result['geo'] = result['geo']
-            new_result['tweet'] = result['text']
+            new_result = {
+                'from_user': result['from_user_name'],
+                'geo': result['geo'],
+                'tweet': result['text'],
+            }
+
             tweets.append(new_result)
         return tweets
 
     def find_interests(self):
-        interests = {}
-        interests['links'] = []
-        interests['users'] = []
-        interests['hashtags'] = []
-
+        interests = {'links': [], 'users': [], 'hashtags': []}
         for tweet in self.tweets:
             text = tweet['tweet']
             links = re.compile('(http.*?)\Z|(http.*?) ').findall(text)
@@ -57,9 +56,9 @@ class reconPerson:
             except:
                 pass
             interests['users'] +=\
-              re.compile('(@\w+)').findall(text)
+                  re.compile('(@\w+)').findall(text)
             interests['hashtags'] +=\
-              re.compile('(#\w+)').findall(text)
+                  re.compile('(#\w+)').findall(text)
 
         interests['users'].sort()
         interests['hashtags'].sort()
@@ -69,7 +68,7 @@ class reconPerson:
     def twitter_locate(self, cityFile):
         cities = []
         if cityFile != None:
-            for line in open(cityFile).readlines():
+            for line in open(cityFile):
                 city = line.strip('\n').strip('\r').lower()
                 cities.append(city)
 

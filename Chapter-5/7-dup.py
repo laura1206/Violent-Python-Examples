@@ -6,8 +6,7 @@ def dupRadio(pkt):
 	pad=rPkt.pad
 	present=rPkt.present
 	notdecoded=rPkt.notdecoded
-	nPkt = RadioTap(version=version,pad=pad,present=present,notdecoded=notdecoded)
-	return nPkt
+	return RadioTap(version=version,pad=pad,present=present,notdecoded=notdecoded)
 
 def dupDot11(pkt):
 	dPkt=pkt.getlayer(Dot11)
@@ -19,44 +18,60 @@ def dupDot11(pkt):
 	addr1=dPkt.addr1
 	addr2=dPkt.addr2
 	addr3=dPkt.addr3
-	SC=dPkt.SC 
+	SC=dPkt.SC
 	addr4=dPkt.addr4
-	nPkt=Dot11(subtype=subtype,type=Type,proto=proto,FCfield=FCfield,ID=ID,addr1=addr1,addr2=addr2,addr3=addr3,SC=SC,addr4=addr4)
-	return nPkt
+	return Dot11(
+		subtype=subtype,
+		type=Type,
+		proto=proto,
+		FCfield=FCfield,
+		ID=ID,
+		addr1=addr1,
+		addr2=addr2,
+		addr3=addr3,
+		SC=SC,
+		addr4=addr4,
+	)
 
 def dupSNAP(pkt):
 	sPkt=pkt.getlayer(SNAP)
 	oui=sPkt.OUI
 	code=sPkt.code
-	nPkt=SNAP(OUI=oui,code=code)
-	return nPkt
+	return SNAP(OUI=oui,code=code)
  
 def dupLLC(pkt):
 	lPkt=pkt.getlayer(LLC)
 	dsap=lPkt.dsap
 	ssap=lPkt.ssap
 	ctrl=lPkt.ctrl
-	nPkt=LLC(dsap=dsap,ssap=ssap,ctrl=ctrl)
-	return nPkt
+	return LLC(dsap=dsap,ssap=ssap,ctrl=ctrl)
  
 def dupIP(pkt):
 	iPkt=pkt.getlayer(IP)
 	version=iPkt.version
 	tos=iPkt.tos
-	ID=iPkt.id 
+	ID=iPkt.id
 	flags=iPkt.flags
 	ttl=iPkt.ttl
 	proto=iPkt.proto
 	src=iPkt.src
 	dst=iPkt.dst
 	options=iPkt.options
-	nPkt=IP(version=version,id=ID,tos=tos,flags=flags,ttl=ttl,proto=proto,src=src,dst=dst,options=options)
-	return nPkt
+	return IP(
+		version=version,
+		id=ID,
+		tos=tos,
+		flags=flags,
+		ttl=ttl,
+		proto=proto,
+		src=src,
+		dst=dst,
+		options=options,
+	)
  
 def dupUDP(pkt):
 	uPkt=pkt.getlayer(UDP)
 	sport=uPkt.sport
 	dport=uPkt.dport
-	nPkt=UDP(sport=sport,dport=dport)
-	return nPkt
+	return UDP(sport=sport,dport=dport)
 
